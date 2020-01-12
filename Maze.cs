@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Drawing;
 
 namespace MazeGame
 {
@@ -10,7 +11,8 @@ namespace MazeGame
         public int[,] map;
         public int width;
         public int height;
-        public int[] playerposition = new int[2];
+        public List<Point> invalidatedTiles = new List<Point>();
+        public Point playerposition = new Point();
 
         public void readMap(String filename)
         {
@@ -38,7 +40,7 @@ namespace MazeGame
                             map[i-2, c] = 0;
                             break;
                         case '@':
-                            playerposition = new int[]{ i - 2, c};
+                            playerposition = new Point(c, i-2);
                             map[i-2, c] = 2;
                             break;
                     }
