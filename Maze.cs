@@ -16,7 +16,9 @@ namespace MazeGame
 
         public void readMap(String filename)
         {
-            String[] mapfile = File.ReadAllLines(@"C:\Users\DrBlury\Desktop\test\" + filename);
+            String pathOfExecutable = System.Environment.CurrentDirectory + "/";
+            Console.WriteLine(pathOfExecutable);
+            String[] mapfile = File.ReadAllLines(pathOfExecutable + filename);
             
             int.TryParse(mapfile[0], out width);
             int.TryParse(mapfile[1], out height);

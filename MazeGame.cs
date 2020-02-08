@@ -26,9 +26,9 @@ namespace MazeGame
         {
 
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-
-            grass = (Bitmap)Image.FromFile(@"C:\Users\DrBlury\Desktop\test\grassTexture.bmp", true);
-            wall = (Bitmap)Image.FromFile(@"C:\Users\DrBlury\Desktop\test\woodTexture.bmp", true);
+            String pathOfExecutable = System.Environment.CurrentDirectory+ "/";
+            grass = (Bitmap)Image.FromFile(pathOfExecutable + "grassTexture.bmp", true);
+            wall = (Bitmap)Image.FromFile(pathOfExecutable + "stoneTexture.bmp", true);
 
             grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
             wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
