@@ -8,7 +8,7 @@ namespace MazeGame
 {
     class MazeGame : Form
     {
-        Maze maze;
+        public Maze maze;
         float tileWidth;
         float tileHeight;
         RectangleF bounds;
@@ -23,7 +23,7 @@ namespace MazeGame
         Bitmap wall;
         Brush wallbrush;
 
-        MazeRunner runner = new MazeRunner(this);
+        MazeRunner runner;
 
         public MazeGame()
         {
@@ -41,8 +41,9 @@ namespace MazeGame
             Text = "MazeGame - Press SPACE to start automatic mode...";
             maze = new Maze();
             maze.readMap("test.maze");
-            
-            
+            runner = new MazeRunner(this);
+
+
         }
         static void Main()
         {
@@ -162,8 +163,8 @@ namespace MazeGame
                 case Keys.Right:
                     movePlayer(new Point(maze.playerposition.X + 1, maze.playerposition.Y));
                     break;
-                case Keys.Alt:
-                    MazeRunner.search(maze);
+                case Keys.Space:
+                    runner.search();
                     break;
             }
             Update();

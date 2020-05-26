@@ -9,12 +9,15 @@ namespace MazeGame
     class MazeRunner
     {
         private MazeGame mazegame;
+        private Maze maze;
+
         public MazeRunner (MazeGame mazegame)
         {
             this.mazegame = mazegame;
+            this.maze = mazegame.maze;
         }
 
-        public static void search(Maze maze)
+        public void search()
         {
             Queue queue = new Queue();
             Point coord = new Point(maze.playerposition.Y, maze.playerposition.X);
@@ -22,7 +25,7 @@ namespace MazeGame
             Hashtable hashtable = new Hashtable();
 
 
-            if (queue.Count > 0)
+            while (queue.Count > 0)
             {
                 Point coords = (Point)queue.Dequeue();
 
@@ -31,9 +34,9 @@ namespace MazeGame
                     // Found an Item
                     Stack stack = new Stack();
                     stack.Push(coords);
-                    Point from = hashtable[coords];
+                    Point from = (Point)hashtable[coords];
                     stack.Push(from);
-                    MazeGame.movePlayer(stack.Pop);
+                    mazegame.movePlayer((Point)stack.Pop());
                     
                 } else
                 {
@@ -55,7 +58,7 @@ namespace MazeGame
                         if (maze.map[neighbor.X, neighbor.Y] != 1)
                         {
                             queue.Enqueue(neighbor);
-                            hashtable.Add(neighbor, new Point(maze.playerposition.Y, maze.playerposition.X));
+                            hashtable.Add(neighbor, new int[] {maze.playerposition.Y, maze.playerposition.X});
                         }
                     }
                 }
