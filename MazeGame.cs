@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace MazeGame
 {
@@ -22,6 +23,8 @@ namespace MazeGame
         Bitmap wall;
         Brush wallbrush;
 
+        MazeRunner runner = new MazeRunner(this);
+
         public MazeGame()
         {
 
@@ -38,6 +41,7 @@ namespace MazeGame
             Text = "MazeGame - Press SPACE to start automatic mode...";
             maze = new Maze();
             maze.readMap("test.maze");
+            
             
         }
         static void Main()
@@ -158,11 +162,14 @@ namespace MazeGame
                 case Keys.Right:
                     movePlayer(new Point(maze.playerposition.X + 1, maze.playerposition.Y));
                     break;
+                case Keys.Alt:
+                    MazeRunner.search(maze);
+                    break;
             }
             Update();
         }
 
-        private void movePlayer(Point futurePosition)
+        public void movePlayer(Point futurePosition)
         {
             // Check if the player is trying to go inside a wall
             if (maze.map[futurePosition.Y, futurePosition.X] != 1)

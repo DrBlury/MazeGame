@@ -8,7 +8,13 @@ namespace MazeGame
 {
     class MazeRunner
     {
-        public static int[] search(Maze maze)
+        private MazeGame mazegame;
+        public MazeRunner (MazeGame mazegame)
+        {
+            this.mazegame = mazegame;
+        }
+
+        public static void search(Maze maze)
         {
             Queue queue = new Queue();
             Point coord = new Point(maze.playerposition.Y, maze.playerposition.X);
@@ -16,13 +22,19 @@ namespace MazeGame
             Hashtable hashtable = new Hashtable();
 
 
-            if (queue.Count >= 1)
+            if (queue.Count > 0)
             {
                 Point coords = (Point)queue.Dequeue();
 
                 if (maze.map[coords.X, coords.Y] == 0)
                 {
                     // Found an Item
+                    Stack stack = new Stack();
+                    stack.Push(coords);
+                    Point from = hashtable[coords];
+                    stack.Push(from);
+                    MazeGame.movePlayer(stack.Pop);
+                    
                 } else
                 {
                     Point[] neighbors = new Point[4];
@@ -37,9 +49,17 @@ namespace MazeGame
 
                     // Second neighbor / Left
                     neighbors[3] = new Point(coords.X - 1, coords.Y);
+
+                    foreach (Point neighbor in neighbors)
+                    {
+                        if (maze.map[neighbor.X, neighbor.Y] != 1)
+                        {
+                            queue.Enqueue(neighbor);
+                            hashtable.Add(neighbor, new Point(maze.playerposition.Y, maze.playerposition.X));
+                        }
+                    }
                 }
             }
-            return new int[2];
         }
     }
 }
