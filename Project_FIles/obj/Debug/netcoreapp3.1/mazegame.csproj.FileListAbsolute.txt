@@ -1,0 +1,16 @@
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\bin\Debug\netcoreapp3.1\mazegame.exe
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\bin\Debug\netcoreapp3.1\mazegame.deps.json
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\bin\Debug\netcoreapp3.1\mazegame.runtimeconfig.json
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\bin\Debug\netcoreapp3.1\mazegame.runtimeconfig.dev.json
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\bin\Debug\netcoreapp3.1\mazegame.dll
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\bin\Debug\netcoreapp3.1\mazegame.pdb
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.csprojAssemblyReference.cache
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\MazeGame.MazeGame.resources
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.csproj.GenerateResource.cache
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.AssemblyInfoInputs.cache
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.AssemblyInfo.cs
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.csproj.CoreCompileInputs.cache
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.dll
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.pdb
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.genruntimeconfig.cache
+C:\Users\DrBlury\Documents\git\MazeGame\Project_FIles\obj\Debug\netcoreapp3.1\mazegame.Launcher.resources

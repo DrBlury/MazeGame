@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "XUhYS13b/NAXI6e9+3t7Fao67cPiwT6oD0O9ML2Dp6EpgDYl6RZgqDjQ9kUL2Q4s0W6VPBXoRr7zTUGVoRJ4wg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\mazegame.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\DrBlury\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}
