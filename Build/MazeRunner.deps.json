@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "mazegame/1.0.0": {
+      "MazeRunner/1.0.0": {
         "runtime": {
-          "mazegame.dll": {}
+          "MazeRunner.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "mazegame/1.0.0": {
+    "MazeRunner/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
