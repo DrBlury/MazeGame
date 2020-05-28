@@ -2,13 +2,18 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Timers;
+using System.Collections;
+using Timer = System.Timers.Timer;
 
 namespace MazeGame
 {
     class MazeGame : Form
     {
         public Maze maze;
+        public bool canWalk;
+        public Timer aTimer;
+
         float tileWidth;
         float tileHeight;
         RectangleF bounds;
@@ -27,7 +32,6 @@ namespace MazeGame
 
         public MazeGame()
         {
-
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             String pathOfExecutable = System.Environment.CurrentDirectory+ "/";
             grass = (Bitmap)Image.FromFile(pathOfExecutable + "grassTexture.bmp", true);
@@ -42,9 +46,24 @@ namespace MazeGame
             maze = new Maze();
             maze.readMap("test.maze");
             runner = new MazeRunner(this);
-
-
+            SetTimer();
         }
+
+        private void SetTimer() {
+            aTimer = new Timer();
+            aTimer.Interval = 100;
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = false;
+            aTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e) {
+            this.canWalk = true;
+            aTimer.Enabled = false;
+            aTimer.Stop();
+        }
+
         static void Main()
         {
             Application.Run(new MazeGame());
@@ -103,7 +122,7 @@ namespace MazeGame
                 new PointF(point.X * tileWidth, point.Y * tileHeight),
                 new SizeF(tileWidth, tileHeight));
 
-            switch(maze.map[point.Y, point.X])
+            switch(maze.map[point.X, point.Y])
             {
                 case 2:
                     e.Graphics.FillRectangle(grassbrush, rect);
@@ -167,26 +186,37 @@ namespace MazeGame
                     runner.search();
                     break;
             }
-            Update();
+            
+        }
+
+        public void walkPath(Stack waypoints) {
+            while (waypoints.Count > 0) {
+                if (this.canWalk) {
+                    movePlayer((Point)waypoints.Pop());
+                }
+            }
         }
 
         public void movePlayer(Point futurePosition)
         {
             // Check if the player is trying to go inside a wall
-            if (maze.map[futurePosition.Y, futurePosition.X] != 1)
+            if (maze.map[futurePosition.X, futurePosition.Y] != 1 && this.canWalk)
             {
+                this.canWalk = false;
+                aTimer.Start();
                 // Move the player to the future position and replace the tile
                 // that the player stood on with a grass tile. (3)
-                maze.map[maze.playerposition.Y, maze.playerposition.X] = 3;
+                maze.map[maze.playerposition.X, maze.playerposition.Y] = 3;
                 invalidatePlayerTile();
 
                 // Move the playerposition to a different position
                 maze.playerposition = futurePosition;
 
                 // Set the new tile to be the player tile
-                maze.map[maze.playerposition.Y, maze.playerposition.X] = 2;
+                maze.map[maze.playerposition.X, maze.playerposition.Y] = 2;
                 invalidatePlayerTile();
             }
+            Update();
         }
 
         private void invalidatePlayerTile()
