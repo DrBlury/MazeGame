@@ -14,7 +14,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\mazegame.csproj",
-      "projectName": "mazegame",
+      "projectName": "MazeRunner",
       "projectPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\mazegame.csproj",
       "packagesPath": "C:\\Users\\DrBlury\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\obj\\",
