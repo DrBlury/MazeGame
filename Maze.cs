@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
+using mazegame;
 
 namespace MazeGame
 {
@@ -14,15 +16,27 @@ namespace MazeGame
         public List<Point> invalidatedTiles = new List<Point>();
         public Point playerposition = new Point();
 
-        public void readMap(String filename)
+        public void readMap(String filePath)
         {
-            String pathOfExecutable = System.Environment.CurrentDirectory + "/";
-            Console.WriteLine(pathOfExecutable);
-            String[] mapfile = File.ReadAllLines(pathOfExecutable + filename);
-            
-            int.TryParse(mapfile[0], out width);
-            int.TryParse(mapfile[1], out height);
+            String[] mapfile = File.ReadAllLines(filePath);
 
+
+            if (!int.TryParse(mapfile[0], out width) ||
+                !int.TryParse(mapfile[1], out height)) 
+            {
+                string message = "Maze file invalid. Please check for proper formatting.";
+                string caption = "Error Detected in file";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result;
+
+                // Displays the MessageBox.
+                result = MessageBox.Show(message, caption, buttons);
+                if (result == System.Windows.Forms.DialogResult.OK) {
+                    // Closes the parent form
+                    throw new MazeReadException("Maze Invalid.");
+                }
+            };
+            
             map = new int[width, height];
 
             Console.WriteLine("Width of the maze: " + width);

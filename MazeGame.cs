@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Timers;
 using System.Collections;
 using Timer = System.Timers.Timer;
+using mazegame;
 
 namespace MazeGame
 {
@@ -28,9 +29,11 @@ namespace MazeGame
         Bitmap wall;
         Brush wallbrush;
 
+        Icon icon;
+
         MazeRunner runner;
 
-        public MazeGame()
+        public MazeGame(Form mainForm, string filePath)
         {
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             String pathOfExecutable = System.Environment.CurrentDirectory+ "/";
@@ -40,11 +43,19 @@ namespace MazeGame
             grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
             wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
 
+            icon = new Icon(pathOfExecutable + "icon.ico");
+            Icon = icon;
             Width = 600;
             Height = 600;
             Text = "MazeGame - Press SPACE to start automatic mode...";
             maze = new Maze();
-            maze.readMap("test.maze");
+            try {
+                maze.readMap(filePath);
+            }
+            catch (MazeReadException) {
+                mainForm.Show();
+                this.Close();
+            }
             runner = new MazeRunner(this);
             SetTimer();
         }
@@ -62,11 +73,6 @@ namespace MazeGame
             this.canWalk = true;
             aTimer.Enabled = false;
             aTimer.Stop();
-        }
-
-        static void Main()
-        {
-            Application.Run(new MazeGame());
         }
 
         override
