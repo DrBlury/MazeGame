@@ -153,8 +153,7 @@ namespace MazeAI
                     (point.X * tileWidth) + tileWidth * ((1f - playerSizeMultiplicator) / 2),
                     (point.Y * tileHeight) + tileHeight * ((1f - playerSizeMultiplicator) / 2)),
                     playerSize);
-
-            e.Graphics.FillRectangle(Brushes.Red, player);
+            e.Graphics.FillEllipse(Brushes.Red, player);
         }
 
         private void drawItemTile(PaintEventArgs e, Point point, RectangleF rect) {
