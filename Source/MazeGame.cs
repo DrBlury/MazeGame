@@ -42,15 +42,12 @@ namespace MazeGame
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
             
-            Stream stream = new FileStream(pathOfExecutable + "/Resources/Images/grassTexture.bmp", FileMode.Open);
-            grass = (Bitmap)Image.FromStream(stream);
-
-            stream = new FileStream(pathOfExecutable + "/Resources/Images/stoneTexture.bmp", FileMode.Open);
-            wall = (Bitmap)Image.FromStream(stream);
+            this.wall = new Bitmap(pathOfExecutable + "/Resources/Images/stoneTexture.bmp");
+            this.grass = new Bitmap(pathOfExecutable + "/Resources/Images/grassTexture.bmp");
 
             grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
             wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
-
+            
             icon = new Icon(pathOfExecutable + "/Resources/Images/icon.ico");
             Icon = icon;
             Width = 600;
