@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
+
 using System.Drawing;
 using System.Collections.Generic;
 using System.Timers;
 using System.Collections;
 using Timer = System.Timers.Timer;
+using System.Threading;
 
 namespace MazeGame
 {
     class MazeGame : Form
     {
         public Maze maze;
-        public bool canWalk;
+        public bool canWalk = true;
+        bool enableAutoplay;
+        bool autoplayerSpawned = false;
         public Timer aTimer;
 
         float tileWidth;
@@ -33,23 +37,30 @@ namespace MazeGame
         MazeRunner runner;
         String pathOfExecutable = System.Environment.CurrentDirectory + "/";
 
-        public MazeGame(Maze maze) {
+        Form mainForm;
+
+        public MazeGame(Form mainForm, Maze maze, bool enableAutoplay) {
+            this.enableAutoplay = enableAutoplay;
+            this.mainForm = mainForm;
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-
+            
             grass = (Bitmap)Image.FromFile(pathOfExecutable + "/Ressources/Images/grassTexture.bmp", true);
             wall = (Bitmap)Image.FromFile(pathOfExecutable + "/Ressources/Images/stoneTexture.bmp", true);
 
             grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
             wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
 
-            icon = new Icon(pathOfExecutable + "/images/icon.ico");
+            icon = new Icon(pathOfExecutable + "/Ressources/Images/icon.ico");
             Icon = icon;
             Width = 600;
             Height = 600;
-            Text = "MazeGame - Press SPACE to start automatic mode...";
-            runner = new MazeRunner(this);
+            Text = "MazeRunner! - have fun.";
             SetTimer();
+            Invalidate(new Region(new RectangleF(0,0,Width, Height)));
+            Refresh();
+            Update();
+            
         }
 
         private void SetTimer() {
@@ -57,7 +68,7 @@ namespace MazeGame
             aTimer.Interval = 100;
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = false;
+            aTimer.AutoReset = true;
             aTimer.Enabled = true;
         }
 
@@ -65,6 +76,10 @@ namespace MazeGame
             this.canWalk = true;
             aTimer.Enabled = false;
             aTimer.Stop();
+        }
+
+        private void MazeGame_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            mainForm.Show();
         }
 
         override
@@ -94,9 +109,15 @@ namespace MazeGame
                     }
                 }
                 updateMaze = false;
+                Refresh();
             }
             else {
                 drawInvalidatedTiles(e, maze.invalidatedTiles);
+            }
+
+            if (enableAutoplay && !autoplayerSpawned) {
+                autoplayerSpawned = true;
+                runner = new MazeRunner(this);
             }
         }
 
@@ -167,9 +188,9 @@ namespace MazeGame
                 case Keys.Right:
                     movePlayer(new Point(maze.playerposition.X + 1, maze.playerposition.Y));
                     break;
-                case Keys.Space:
-                    runner.search();
-                    break;
+                //case Keys.Space:
+                //    runner.search();
+                //    break;
             }
 
         }
@@ -186,7 +207,6 @@ namespace MazeGame
             // Check if the player is trying to go inside a wall
             if (maze.map[futurePosition.X, futurePosition.Y] != 1 && this.canWalk) {
                 this.canWalk = false;
-                aTimer.Start();
                 // Move the player to the future position and replace the tile
                 // that the player stood on with a grass tile. (3)
                 maze.map[maze.playerposition.X, maze.playerposition.Y] = 3;
@@ -199,6 +219,7 @@ namespace MazeGame
                 maze.map[maze.playerposition.X, maze.playerposition.Y] = 2;
                 invalidatePlayerTile();
             }
+            aTimer.Start();
             Update();
         }
 

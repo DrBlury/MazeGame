@@ -32,6 +32,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\Images\auto.png" />
+    <None Remove="Ressources\Images\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ressources\Images\auto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Images\icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -55,9 +69,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Ressources\Images\grassTexture.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Ressources\Images\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Ressources\Images\logo_large.png">

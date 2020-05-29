@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using MazeGame;
 
 namespace mazegame
 {
+    
     public class Launcher : Form
     {
         String pathOfExecutable = System.Environment.CurrentDirectory + "/";
         PictureBox confirmationImage;
         Button startBtn;
+        CheckBox autoPlayerCbox;
         Maze maze;
         private String filePath;
 
@@ -18,10 +21,12 @@ namespace mazegame
             Application.Run(new Launcher());
         }
 
+        
+
         public Launcher() {
             Icon = new Icon(pathOfExecutable + "/Ressources/Images/icon.ico");
             Width = 600;
-            Height = 400;
+            Height = 370;
             BackColor = Color.FromArgb(30, 30, 30);
             ControlBox = false;
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -32,7 +37,26 @@ namespace mazegame
             DrawStartButton();
             DrawfileLoaderButton();
             DrawConfirmationImage();
+            DrawAutoPlayerCheckbox();
         }
+
+        private const int WM_NCHITTEST = 0x84;
+        private const int HTCLIENT = 0x1;
+        private const int HTCAPTION = 0x2;
+
+        protected override void WndProc(ref Message m) {
+            switch (m.Msg) {
+                case WM_NCHITTEST:
+                    base.WndProc(ref m);
+
+                    if ((int)m.Result == HTCLIENT)
+                        m.Result = (IntPtr)HTCAPTION;
+                    return;
+            }
+
+            base.WndProc(ref m);
+        }
+
         private void DrawLogo() {
             PictureBox logo = new PictureBox {
                 Name = "logo",
@@ -44,14 +68,41 @@ namespace mazegame
             Controls.Add(logo);
         }
 
+        private void DrawAutoPlayerCheckbox() {
+            PictureBox autoPlayerImage = new PictureBox {
+                Name = "autoplayer",
+                Size = new Size(60, 40),
+                Location = new Point(100, 310),
+                Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/auto.png"),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+            };
+            Controls.Add(autoPlayerImage);
+
+            autoPlayerCbox = new CheckBox();
+            autoPlayerCbox.Location = new Point(100, 310);
+            autoPlayerCbox.Height = 40;
+            autoPlayerCbox.Width = 100;
+            //autoPlayerCbox.FlatStyle = FlatStyle.Flat;
+            //autoPlayerCbox.FlatAppearance.BorderSize = 0;
+
+            // Set background and foreground
+            autoPlayerCbox.BackColor = Color.FromArgb(180, 70, 70);
+            autoPlayerCbox.ForeColor = Color.White;
+
+            autoPlayerCbox.Name = "autoPlayerCbox";
+            autoPlayerCbox.Appearance = Appearance.Button;
+
+            Controls.Add(autoPlayerCbox);
+        }
+
         private void DrawConfirmationImage() {
             confirmationImage = new PictureBox {
                 Name = "confirmationImage",
-                Size = new Size(100, 100),
-                Location = new Point(400, 250),
+                Size = new Size(40, 40),
+                Location = new Point(460, 250),
                 Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/tick.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                BackColor = Color.Transparent,
+                BackColor = Color.FromArgb(40, 200, 40),
             };
             Controls.Add(confirmationImage);
             confirmationImage.Hide();
@@ -61,11 +112,14 @@ namespace mazegame
             switch (accepted) {
                 case true:
                     confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/tick.png");
+                    confirmationImage.BackColor = Color.FromArgb(40, 200, 40); // Green
                     break;
                 case false:
                     confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/cross.png");
+                    confirmationImage.BackColor = Color.FromArgb(120, 30, 30); // Red
                     break;
             }
+            confirmationImage.BringToFront();
             
         }
 
@@ -73,7 +127,7 @@ namespace mazegame
             Button fileLoaderBtn = new Button();
             fileLoaderBtn.Location = new Point(100, 250);
             fileLoaderBtn.Height = 40;
-            fileLoaderBtn.Width = 300;
+            fileLoaderBtn.Width = 400;
             fileLoaderBtn.FlatStyle = FlatStyle.Flat;
             fileLoaderBtn.FlatAppearance.BorderSize = 0;
 
@@ -93,9 +147,9 @@ namespace mazegame
 
         private void DrawStartButton() {
             startBtn = new Button();
-            startBtn.Location = new Point(100, 310);
+            startBtn.Location = new Point(220, 310);
             startBtn.Height = 40;
-            startBtn.Width = 300;
+            startBtn.Width = 280;
             startBtn.FlatStyle = FlatStyle.Flat;
             startBtn.FlatAppearance.BorderSize = 0;
 
@@ -115,7 +169,7 @@ namespace mazegame
 
         private void DrawExitButton() {
             Button exitBtn = new Button();
-            exitBtn.Location = new Point(520, 20);
+            exitBtn.Location = new Point(540, 15);
             exitBtn.Height = 40;
             exitBtn.Width = 40;
             exitBtn.FlatStyle = FlatStyle.Flat;
@@ -165,17 +219,16 @@ namespace mazegame
         void Form_Closed(object sender, FormClosedEventArgs e) {
             this.Show();
         }
+        
+        private void ThreadProc() {
+            Application.Run(new MazeGame.MazeGame(this, maze, autoPlayerCbox.Checked));
+        }
 
         void StartBtn_Click(object sender, EventArgs e) {
             Hide();
-            Form gameForm = new MazeGame.MazeGame(maze);
-            gameForm.FormClosed += new FormClosedEventHandler(Form_Closed);
-
-            try {
-                gameForm.ShowDialog();
-            } catch {
-
-            }
+            Thread t = new Thread(ThreadProc);
+            t.Start();
         }
+
     }
 }

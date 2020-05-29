@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\mazegame.csproj",
+      "projectUniqueName": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\mazegame.csproj",
       "projectName": "MazeRunner",
-      "projectPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\mazegame.csproj",
+      "projectPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\mazegame.csproj",
       "packagesPath": "C:\\Users\\DrBlury\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\Project_FIles\\obj\\",
+      "outputPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DrBlury\\AppData\\Roaming\\NuGet\\NuGet.Config",
