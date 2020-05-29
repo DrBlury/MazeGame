@@ -32,7 +32,7 @@ namespace MazeAI
         Icon icon;
 
         MazeRunner runner;
-        String pathOfExecutable = System.Environment.CurrentDirectory;
+        String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory;
 
         Form mainForm;
 
