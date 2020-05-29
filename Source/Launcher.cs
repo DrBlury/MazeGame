@@ -12,7 +12,6 @@ namespace mazegame
         String pathOfExecutable = System.Environment.CurrentDirectory + "/";
         PictureBox confirmationImage;
         Button startBtn;
-        CheckBox autoPlayerCbox;
         Maze maze;
         private String filePath;
 
@@ -37,7 +36,6 @@ namespace mazegame
             DrawStartButton();
             DrawfileLoaderButton();
             DrawConfirmationImage();
-            DrawAutoPlayerCheckbox();
         }
 
         private const int WM_NCHITTEST = 0x84;
@@ -66,33 +64,6 @@ namespace mazegame
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
             Controls.Add(logo);
-        }
-
-        private void DrawAutoPlayerCheckbox() {
-            PictureBox autoPlayerImage = new PictureBox {
-                Name = "autoplayer",
-                Size = new Size(60, 40),
-                Location = new Point(100, 310),
-                Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/auto.png"),
-                SizeMode = PictureBoxSizeMode.StretchImage,
-            };
-            Controls.Add(autoPlayerImage);
-
-            autoPlayerCbox = new CheckBox();
-            autoPlayerCbox.Location = new Point(100, 310);
-            autoPlayerCbox.Height = 40;
-            autoPlayerCbox.Width = 100;
-            //autoPlayerCbox.FlatStyle = FlatStyle.Flat;
-            //autoPlayerCbox.FlatAppearance.BorderSize = 0;
-
-            // Set background and foreground
-            autoPlayerCbox.BackColor = Color.FromArgb(180, 70, 70);
-            autoPlayerCbox.ForeColor = Color.White;
-
-            autoPlayerCbox.Name = "autoPlayerCbox";
-            autoPlayerCbox.Appearance = Appearance.Button;
-
-            Controls.Add(autoPlayerCbox);
         }
 
         private void DrawConfirmationImage() {
@@ -147,9 +118,9 @@ namespace mazegame
 
         private void DrawStartButton() {
             startBtn = new Button();
-            startBtn.Location = new Point(220, 310);
+            startBtn.Location = new Point(100, 310);
             startBtn.Height = 40;
-            startBtn.Width = 280;
+            startBtn.Width = 400;
             startBtn.FlatStyle = FlatStyle.Flat;
             startBtn.FlatAppearance.BorderSize = 0;
 
@@ -179,9 +150,9 @@ namespace mazegame
             exitBtn.BackColor = Color.FromArgb(180, 70, 70);
             exitBtn.ForeColor = Color.White;
 
-            exitBtn.Text = "X";
+            exitBtn.Text = "×";
             exitBtn.Name = "exitBtn";
-            exitBtn.Font = new Font("Georgia", 16);
+            exitBtn.Font = new Font("Georgia", 26);
 
             // Add a Button Click Event handler
             exitBtn.Click += new EventHandler(ExitBtn_Click);
@@ -219,15 +190,12 @@ namespace mazegame
         void Form_Closed(object sender, FormClosedEventArgs e) {
             this.Show();
         }
-        
-        private void ThreadProc() {
-            Application.Run(new MazeGame.MazeGame(this, maze, autoPlayerCbox.Checked));
-        }
 
         void StartBtn_Click(object sender, EventArgs e) {
             Hide();
-            Thread t = new Thread(ThreadProc);
-            t.Start();
+            Form gameForm = new MazeGame.MazeGame(this, maze);
+            gameForm.FormClosed += Form_Closed;
+            gameForm.ShowDialog();
         }
 
     }

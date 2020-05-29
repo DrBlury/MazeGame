@@ -25,7 +25,7 @@ Any other symbol will throw an error if you try to load the maze file.
 
 The arrow keys are used for movement while you can also press space to move the player towards the next item.
 
-Keep space pressed to auto-complete the maze!
+Keep space pressed to auto-complete the maze! (Press the AUTO Button in the launcher first to enable this)
 
 Note: 
 You can always resize the window to your liking. 

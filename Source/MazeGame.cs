@@ -14,8 +14,6 @@ namespace MazeGame
     {
         public Maze maze;
         public bool canWalk = true;
-        bool enableAutoplay;
-        bool autoplayerSpawned = false;
         public Timer aTimer;
 
         float tileWidth;
@@ -39,8 +37,7 @@ namespace MazeGame
 
         Form mainForm;
 
-        public MazeGame(Form mainForm, Maze maze, bool enableAutoplay) {
-            this.enableAutoplay = enableAutoplay;
+        public MazeGame(Form mainForm, Maze maze) {
             this.mainForm = mainForm;
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
@@ -55,12 +52,13 @@ namespace MazeGame
             Icon = icon;
             Width = 600;
             Height = 600;
-            Text = "MazeRunner! - have fun.";
+            Text = "MazeRunner! - have fun. PRESS SPACE TO AUTO WALK!";
             SetTimer();
-            Invalidate(new Region(new RectangleF(0,0,Width, Height)));
+
+            runner = new MazeRunner(this);
+
             Refresh();
             Update();
-            
         }
 
         private void SetTimer() {
@@ -115,10 +113,6 @@ namespace MazeGame
                 drawInvalidatedTiles(e, maze.invalidatedTiles);
             }
 
-            if (enableAutoplay && !autoplayerSpawned) {
-                autoplayerSpawned = true;
-                runner = new MazeRunner(this);
-            }
         }
 
         private void drawInvalidatedTiles(PaintEventArgs e, List<Point> invalidatedTiles) {
@@ -188,9 +182,9 @@ namespace MazeGame
                 case Keys.Right:
                     movePlayer(new Point(maze.playerposition.X + 1, maze.playerposition.Y));
                     break;
-                //case Keys.Space:
-                //    runner.search();
-                //    break;
+                case Keys.Space:
+                    runner.search();
+                    break;
             }
 
         }
@@ -201,6 +195,7 @@ namespace MazeGame
                     movePlayer((Point)waypoints.Pop());
                 }
             }
+            maze.itemsLeft--;
         }
 
         public void movePlayer(Point futurePosition) {
