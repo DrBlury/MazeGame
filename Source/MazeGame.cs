@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-
 using System.Drawing;
 using System.Collections.Generic;
 using System.Timers;
 using System.Collections;
 using Timer = System.Timers.Timer;
+using System.ComponentModel;
 
 namespace MazeAI
 {
@@ -24,10 +24,10 @@ namespace MazeAI
         bool updateMaze = true;
 
         Bitmap grass;
-        Brush grassbrush;
+        TextureBrush grassbrush;
 
         Bitmap wall;
-        Brush wallbrush;
+        TextureBrush wallbrush;
 
         MazeRunner runner;
         String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory + "/";
@@ -40,13 +40,16 @@ namespace MazeAI
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
             //THIS IS NOT COMPATIBLE WITH MONO. It will throw an exception.Only for windows use. (Makes this whole application look a lot nicer)
-            this.wall = new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.bmp");
-            this.grass = new Bitmap(pathOfExecutable + "Resources/Images/grassTexture.bmp");
+            this.wall = new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.png");
+            this.grass = new Bitmap(pathOfExecutable + "Resources/Images/grassTexture.png");
 
             //TextureBrush brush = new TextureBrush();
 
-            grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
-            wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
+            grassbrush = new TextureBrush(this.grass);
+            grassbrush.ScaleTransform(0.1f, 0.1f);
+
+            wallbrush = new TextureBrush(this.wall);
+            wallbrush.ScaleTransform(0.1f, 0.1f);
 
             Width = 600;
             Height = 600;
@@ -125,6 +128,7 @@ namespace MazeAI
                 new PointF(point.X * tileWidth, point.Y * tileHeight),
                 new SizeF(tileWidth, tileHeight));
 
+
             switch (maze.map[point.X, point.Y]) {
                 case 2:
                     e.Graphics.FillRectangle(grassbrush, rect);
@@ -154,15 +158,11 @@ namespace MazeAI
         }
 
         private void drawItemTile(PaintEventArgs e, Point point, RectangleF rect) {
-            Brush brush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
-            e.Graphics.FillRectangle(brush, rect);
-
-            //Now draw the item on top
-            brush = Brushes.Yellow;
+            e.Graphics.FillRectangle(grassbrush, rect);
             RectangleF itemRect = new RectangleF(
                 new PointF((point.X * tileWidth) + tileWidth * 0.3f, (point.Y * tileHeight) + tileHeight * 0.3f),
                 new SizeF(tileWidth * 0.4f, tileHeight * 0.4f));
-            e.Graphics.FillRectangle(Brushes.Yellow, itemRect);
+            e.Graphics.FillEllipse(Brushes.Yellow, itemRect);
         }
 
         override
