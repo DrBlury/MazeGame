@@ -8,7 +8,7 @@ namespace MazeLauncher
     
     public class Launcher : Form
     {
-        String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory;
+        String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory + "/";
         PictureBox confirmationImage;
         Button startBtn;
         Maze maze;

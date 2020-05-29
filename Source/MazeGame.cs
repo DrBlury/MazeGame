@@ -30,7 +30,7 @@ namespace MazeAI
         Brush wallbrush;
 
         MazeRunner runner;
-        String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory;
+        String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory + "/";
 
         Form mainForm;
 
