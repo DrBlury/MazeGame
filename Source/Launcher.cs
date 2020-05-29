@@ -22,7 +22,6 @@ namespace MazeLauncher
         
 
         public Launcher() {
-            Icon = new Icon(pathOfExecutable + "\\Resources\\Images\\icon.ico");
             Width = 600;
             Height = 370;
             BackColor = Color.FromArgb(30, 30, 30);
