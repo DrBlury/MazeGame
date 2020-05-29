@@ -23,7 +23,7 @@ namespace mazegame
         
 
         public Launcher() {
-            Icon = new Icon(pathOfExecutable + "/Ressources/Images/icon.ico");
+            Icon = new Icon(pathOfExecutable + "/Resources/Images/icon.ico");
             Width = 600;
             Height = 370;
             BackColor = Color.FromArgb(30, 30, 30);
@@ -60,7 +60,7 @@ namespace mazegame
                 Name = "logo",
                 Size = new Size(400, 200),
                 Location = new Point(100, 20),
-                Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/logo_small.png"),
+                Image = Image.FromFile(pathOfExecutable + "/Resources/Images/logo_small.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
             Controls.Add(logo);
@@ -71,7 +71,7 @@ namespace mazegame
                 Name = "confirmationImage",
                 Size = new Size(40, 40),
                 Location = new Point(460, 250),
-                Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/tick.png"),
+                Image = Image.FromFile(pathOfExecutable + "/Resources/Images/tick.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 BackColor = Color.FromArgb(40, 200, 40),
             };
@@ -82,11 +82,11 @@ namespace mazegame
         private void ChangeConfirmationImage(bool accepted) {
             switch (accepted) {
                 case true:
-                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/tick.png");
+                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Resources/Images/tick.png");
                     confirmationImage.BackColor = Color.FromArgb(40, 200, 40); // Green
                     break;
                 case false:
-                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Ressources/Images/cross.png");
+                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Resources/Images/cross.png");
                     confirmationImage.BackColor = Color.FromArgb(120, 30, 30); // Red
                     break;
             }

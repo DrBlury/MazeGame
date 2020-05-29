@@ -32,15 +32,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Ressources\Images\auto.png" />
-    <None Remove="Ressources\Images\icon.ico" />
+    <None Remove="Resources\Images\auto.png" />
+    <None Remove="Resources\Images\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Ressources\Images\auto.png">
+    <Content Include="Resources\Images\auto.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Ressources\Images\icon.ico">
+    <Content Include="Resources\Images\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -65,46 +65,46 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Ressources\Images\cross.png">
+    <None Update="Resources\Images\cross.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\grassTexture.bmp">
+    <None Update="Resources\Images\grassTexture.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\logo_large.png">
+    <None Update="Resources\Images\logo_large.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\logo_small.png">
+    <None Update="Resources\Images\logo_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\logo_small_icon_only.png">
+    <None Update="Resources\Images\logo_small_icon_only.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\logo_small_icon_only_inverted.png">
+    <None Update="Resources\Images\logo_small_icon_only_inverted.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\logo_white_large.png">
+    <None Update="Resources\Images\logo_white_large.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\stoneTexture.bmp">
+    <None Update="Resources\Images\stoneTexture.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Images\tick.png">
+    <None Update="Resources\Images\tick.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Mazes\15x15_maze.maze">
+    <None Update="Resources\Mazes\15x15_maze.maze">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Mazes\5x5_maze.maze">
+    <None Update="Resources\Mazes\5x5_maze.maze">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Mazes\complex_maze.maze">
+    <None Update="Resources\Mazes\complex_maze.maze">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Mazes\corrupted_maze.maze">
+    <None Update="Resources\Mazes\corrupted_maze.maze">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\Mazes\invalid_dimensions_maze.maze">
+    <None Update="Resources\Mazes\invalid_dimensions_maze.maze">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
