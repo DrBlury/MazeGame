@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using MazeAI;
 
@@ -23,7 +22,7 @@ namespace MazeLauncher
         
 
         public Launcher() {
-            Icon = new Icon(pathOfExecutable + "/Resources/Images/icon.ico");
+            Icon = new Icon(pathOfExecutable + "\\Resources\\Images\\icon.ico");
             Width = 600;
             Height = 370;
             BackColor = Color.FromArgb(30, 30, 30);
@@ -60,7 +59,7 @@ namespace MazeLauncher
                 Name = "logo",
                 Size = new Size(400, 200),
                 Location = new Point(100, 20),
-                Image = Image.FromFile(pathOfExecutable + "/Resources/Images/logo_small.png"),
+                Image = Image.FromFile(pathOfExecutable + "\\Resources\\Images\\logo_small.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
             Controls.Add(logo);
@@ -71,7 +70,7 @@ namespace MazeLauncher
                 Name = "confirmationImage",
                 Size = new Size(40, 40),
                 Location = new Point(460, 250),
-                Image = Image.FromFile(pathOfExecutable + "/Resources/Images/tick.png"),
+                Image = Image.FromFile(pathOfExecutable + "\\Resources\\Images\\tick.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 BackColor = Color.FromArgb(40, 200, 40),
             };
@@ -82,11 +81,11 @@ namespace MazeLauncher
         private void ChangeConfirmationImage(bool accepted) {
             switch (accepted) {
                 case true:
-                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Resources/Images/tick.png");
+                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "\\Resources\\Images\\tick.png");
                     confirmationImage.BackColor = Color.FromArgb(40, 200, 40); // Green
                     break;
                 case false:
-                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "/Resources/Images/cross.png");
+                    confirmationImage.Image = Image.FromFile(pathOfExecutable + "\\Resources\\Images\\cross.png");
                     confirmationImage.BackColor = Color.FromArgb(120, 30, 30); // Red
                     break;
             }
@@ -179,7 +178,8 @@ namespace MazeLauncher
                     ChangeConfirmationImage(true);
                     startBtn.Enabled = true;
                 }
-                catch (MazeReadException) {
+                catch (Exception E) {
+                    Console.WriteLine(E.ToString());
                     // TODO really throw the exception in the maze class and catch it here. (Show cross)
                     ChangeConfirmationImage(false);
                     startBtn.Enabled = false;
@@ -193,7 +193,7 @@ namespace MazeLauncher
 
         void StartBtn_Click(object sender, EventArgs e) {
             Hide();
-            Form gameForm = new MazeAI.MazeGame(this, maze);
+            Form gameForm = new MazeGame(this, maze);
             gameForm.FormClosed += Form_Closed;
             gameForm.ShowDialog();
         }

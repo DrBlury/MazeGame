@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\DrBlury\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\DrBlury\\.nuget\\packages"
+      "C:\\Users\\blury\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\blury\\.nuget\\packages"
     ]
   }
 }

@@ -9,7 +9,7 @@
     <Product>MazeRunner</Product>
     <AssemblyName>MazeRunner</AssemblyName>
     <RootNamespace>MazeRunner</RootNamespace>
-    <StartupObject>mazegame.Launcher</StartupObject>
+    <StartupObject></StartupObject>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>

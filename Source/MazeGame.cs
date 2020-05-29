@@ -41,13 +41,16 @@ namespace MazeAI
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
-            this.wall = new Bitmap(pathOfExecutable + "/Resources/Images/stoneTexture.bmp");
-            this.grass = new Bitmap(pathOfExecutable + "/Resources/Images/grassTexture.bmp");
+            //THIS IS NOT COMPATIBLE WITH MONO. It will throw an exception.Only for windows use. (Makes this whole application look a lot nicer)
+            this.wall = new Bitmap(pathOfExecutable + "\\Resources\\Images\\stoneTexture.bmp");
+            this.grass = new Bitmap(pathOfExecutable + "\\Resources\\Images\\grassTexture.bmp");
+
+            //TextureBrush brush = new TextureBrush();
 
             grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
             wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
 
-            icon = new Icon(pathOfExecutable + "/Resources/Images/icon.ico");
+            icon = new Icon(pathOfExecutable + "\\Resources\\Images\\icon.ico");
             Icon = icon;
             Width = 600;
             Height = 600;

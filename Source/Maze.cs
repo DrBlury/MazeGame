@@ -75,14 +75,8 @@ namespace MazeAI
             
             string caption = "Error Detected in .maze file";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
-            DialogResult result;
+            MessageBox.Show(message, caption, buttons);
 
-            // Displays the MessageBox.
-            result = MessageBox.Show(message, caption, buttons);
-            if (result == System.Windows.Forms.DialogResult.OK) {
-                // Closes the parent form
-                throw new MazeReadException("Maze Invalid.");
-            }
         }
     }
 }

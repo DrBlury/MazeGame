@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\mazegame.csproj": {}
+    "C:\\Users\\blury\\Desktop\\MazeGame\\mazegame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\mazegame.csproj": {
+    "C:\\Users\\blury\\Desktop\\MazeGame\\mazegame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\mazegame.csproj",
+        "projectUniqueName": "C:\\Users\\blury\\Desktop\\MazeGame\\mazegame.csproj",
         "projectName": "MazeRunner",
-        "projectPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\mazegame.csproj",
-        "packagesPath": "C:\\Users\\DrBlury\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DrBlury\\Documents\\git\\MazeGame\\obj\\",
+        "projectPath": "C:\\Users\\blury\\Desktop\\MazeGame\\mazegame.csproj",
+        "packagesPath": "C:\\Users\\blury\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\blury\\Desktop\\MazeGame\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DrBlury\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\blury\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
