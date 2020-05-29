@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Timers;
 using System.Collections;
 using Timer = System.Timers.Timer;
-using System.Threading;
 
-namespace MazeGame
+namespace MazeAI
 {
     class MazeGame : Form
     {
@@ -33,7 +32,7 @@ namespace MazeGame
         Icon icon;
 
         MazeRunner runner;
-        String pathOfExecutable = System.Environment.CurrentDirectory + "/";
+        String pathOfExecutable = System.Environment.CurrentDirectory;
 
         Form mainForm;
 
@@ -41,13 +40,13 @@ namespace MazeGame
             this.mainForm = mainForm;
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-            
+
             this.wall = new Bitmap(pathOfExecutable + "/Resources/Images/stoneTexture.bmp");
             this.grass = new Bitmap(pathOfExecutable + "/Resources/Images/grassTexture.bmp");
 
             grassbrush = new TextureBrush(this.grass, System.Drawing.Drawing2D.WrapMode.Tile);
             wallbrush = new TextureBrush(this.wall, System.Drawing.Drawing2D.WrapMode.Tile);
-            
+
             icon = new Icon(pathOfExecutable + "/Resources/Images/icon.ico");
             Icon = icon;
             Width = 600;

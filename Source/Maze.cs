@@ -4,9 +4,9 @@ using System.IO;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using mazegame;
+using MazeLauncher;
 
-namespace MazeGame
+namespace MazeAI
 {
     class Maze
     {
@@ -28,10 +28,6 @@ namespace MazeGame
             };
             
             map = new int[width, height];
-
-            Console.WriteLine("Width of the maze: " + width);
-            Console.WriteLine("Height of the maze: " + height);
-
             // For each line (i is the row | Y AXIS)
             for (int row = 2; row < height + 2; row++)
             {

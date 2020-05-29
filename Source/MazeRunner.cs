@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections;
 using System.Drawing;
-using System.Timers;
-using System.Runtime.CompilerServices;
 
-namespace MazeGame
+namespace MazeAI
 {
     class MazeRunner
     {

@@ -2,14 +2,14 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using MazeGame;
+using MazeAI;
 
-namespace mazegame
+namespace MazeLauncher
 {
     
     public class Launcher : Form
     {
-        String pathOfExecutable = System.Environment.CurrentDirectory + "/";
+        String pathOfExecutable = Environment.CurrentDirectory;
         PictureBox confirmationImage;
         Button startBtn;
         Maze maze;
@@ -193,7 +193,7 @@ namespace mazegame
 
         void StartBtn_Click(object sender, EventArgs e) {
             Hide();
-            Form gameForm = new MazeGame.MazeGame(this, maze);
+            Form gameForm = new MazeAI.MazeGame(this, maze);
             gameForm.FormClosed += Form_Closed;
             gameForm.ShowDialog();
         }
