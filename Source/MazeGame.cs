@@ -30,6 +30,7 @@ namespace MazeAI
         
         // Logic
         Timer aTimer;
+        Timer refreshTimer;
         public bool canWalk = true;
 
         public Maze maze;
@@ -68,12 +69,12 @@ namespace MazeAI
 
         private void SetRefreshTimer()
         {
-            aTimer = new Timer();
-            aTimer.Interval = 500;
+            refreshTimer = new Timer();
+            refreshTimer.Interval = 500;
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnRefreshEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            refreshTimer.Elapsed += OnRefreshEvent;
+            refreshTimer.AutoReset = true;
+            refreshTimer.Enabled = true;
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e) {
