@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using MazeLauncher;
 
 namespace MazeAI
 {

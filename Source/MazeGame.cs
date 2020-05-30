@@ -34,7 +34,12 @@ namespace MazeAI
 
         public MazeGame(String filename) {
             this.maze = new Maze();
-            maze.readMap(pathOfExecutable + filename)
+            try{
+                maze.readMap(pathOfExecutable + filename);
+            } catch {
+                Close();
+            }
+            
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
             //THIS IS NOT COMPATIBLE WITH MONO. It will throw an exception.Only for windows use. (Makes this whole application look a lot nicer)
