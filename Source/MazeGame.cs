@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Timers;
 using System.Collections;
 using Timer = System.Timers.Timer;
-using System.ComponentModel;
 
 namespace MazeAI
 {
@@ -115,7 +114,6 @@ namespace MazeAI
                 SetNewTileSizes(e);
                 InvalidateMaze();
             }
-            
             while (maze.invalidatedTiles.Count > 0) {
                 drawTile(e, maze.invalidatedTiles[0]);
                 maze.invalidatedTiles.RemoveAt(0);
@@ -182,6 +180,10 @@ namespace MazeAI
                     break;
                 case Keys.Space:
                     runner.search();
+                    break;
+                case Keys.R:
+                    Console.WriteLine("Invalidating maze!");
+                    InvalidateMaze();
                     break;
             }
             if (direction != maze.playerposition)
