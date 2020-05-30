@@ -32,14 +32,23 @@ namespace MazeAI
         
         String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory + "/";
 
-        static void Main(String[] Args) {
+        [STAThread]
+        static void Main() {
             Application.Run(new MazeGame());
         }
 
         public MazeGame()
         {
-            maze = new Maze();
-            maze.readMap();
+            maze = new Maze(this);
+            try {
+                maze.readMap();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                this.Close();
+            }
+            
 
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
             updateMaze = true;

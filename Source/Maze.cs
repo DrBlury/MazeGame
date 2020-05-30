@@ -15,10 +15,11 @@ namespace MazeAI
         public int height;
         public List<Point> invalidatedTiles = new List<Point>();
         public Point playerposition = new Point();
+        private MazeGame gameForm;
 
-        public Maze()
+        public Maze(MazeGame gameForm)
         {
-
+            this.gameForm = gameForm;
         }
 
         public void readMap()
@@ -67,7 +68,7 @@ namespace MazeAI
             
         }
 
-        private static void invalidMazeError(int errorNumber = 0) {
+        private void invalidMazeError(int errorNumber = 0) {
             String message;
             switch (errorNumber) {
                 case 1:
@@ -83,8 +84,10 @@ namespace MazeAI
             
             string caption = "Error Detected in .maze file";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
-            MessageBox.Show(message, caption, buttons);
-
+            if (MessageBox.Show(message, caption, buttons) == DialogResult.OK)
+            {
+                throw new Exception("Issue loading the maze!");
+            }
         }
     }
 }
