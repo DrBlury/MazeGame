@@ -70,7 +70,7 @@ namespace MazeAI
         private void SetRefreshTimer()
         {
             refreshTimer = new Timer();
-            refreshTimer.Interval = 500;
+            refreshTimer.Interval = 3000;
             // Hook up the Elapsed event for the timer. 
             refreshTimer.Elapsed += OnRefreshEvent;
             refreshTimer.AutoReset = true;
