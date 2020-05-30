@@ -70,7 +70,7 @@ namespace MazeAI
         private void SetRefreshTimer()
         {
             refreshTimer = new Timer();
-            refreshTimer.Interval = 3000;
+            refreshTimer.Interval = 5000;
             // Hook up the Elapsed event for the timer. 
             refreshTimer.Elapsed += OnRefreshEvent;
             refreshTimer.AutoReset = true;
@@ -246,10 +246,10 @@ namespace MazeAI
 
             Invalidate(new Region(
                 new RectangleF(
-                    maze.playerposition.X * tileWidth,
-                    maze.playerposition.Y * tileHeight,
-                    tileWidth,
-                    tileHeight
+                    maze.playerposition.X * tileWidth-1,
+                    maze.playerposition.Y * tileHeight-1,
+                    tileWidth+2,
+                    tileHeight+2
                 )
             ));
         }
