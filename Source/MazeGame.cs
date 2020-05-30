@@ -53,7 +53,8 @@ namespace MazeAI
             wallbrush = new TextureBrush(new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.png"));
             wallbrush.ScaleTransform(tileWidth / wallScaleFactor, tileHeight / wallScaleFactor);
             SetTimer();
-            Console.WriteLine("Creating runner!");
+
+            InvalidateMaze();
             runner = new MazeRunner(this);
         }
 
