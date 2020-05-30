@@ -62,7 +62,6 @@ namespace MazeAI
             runner = new MazeRunner(this);
 
             Refresh();
-            Update();
         }
 
         [STAThread]
@@ -83,10 +82,6 @@ namespace MazeAI
             this.canWalk = true;
             aTimer.Enabled = false;
             aTimer.Stop();
-        }
-
-        private void MazeGame_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            mainForm.Show();
         }
 
         override
