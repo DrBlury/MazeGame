@@ -55,7 +55,6 @@ namespace MazeAI
             runner = new MazeRunner(this);
             Refresh();
             Update();
-            Application.DoEvents();
         }
 
         private void SetTimer() {
@@ -97,34 +96,31 @@ namespace MazeAI
             grassbrush.ScaleTransform(tileWidth / grassScaleFactor, tileHeight / grassScaleFactor);
         }
 
-        private void RedrawMaze(PaintEventArgs e)
+        private void InvalidateMaze()
         {
-            SetNewTileSizes(e);
-            Point tilePoint = new Point();
-            for (int j = 0; j < maze.height; j++)
+            Invalidate(new Region(bounds));
+            for (int mazeY = 0; mazeY < maze.height; mazeY++)
             {
-                tilePoint.Y = j;
-                for (int i = 0; i < maze.width; i++)
+                for (int mazeX = 0; mazeX < maze.width; mazeX++)
                 {
-                    tilePoint.X = i;
-                    drawTile(e, tilePoint);
+                    maze.invalidatedTiles.Add(new Point(mazeX, mazeY));
                 }
             }
-            Refresh();
         }
 
         override
         protected void OnPaint(PaintEventArgs e) {
             if (updateMaze) {
                 updateMaze = false;
-                RedrawMaze(e);
+                SetNewTileSizes(e);
+                InvalidateMaze();
             }
-            else {
-                while (maze.invalidatedTiles.Count > 0) {
-                    drawTile(e, maze.invalidatedTiles[0]);
-                    maze.invalidatedTiles.RemoveAt(0);
-                }
+            
+            while (maze.invalidatedTiles.Count > 0) {
+                drawTile(e, maze.invalidatedTiles[0]);
+                maze.invalidatedTiles.RemoveAt(0);
             }
+            Update();
         }
 
         private void drawTile(PaintEventArgs e, Point point) {
@@ -170,24 +166,28 @@ namespace MazeAI
 
         override
         protected void OnKeyDown(KeyEventArgs e) {
+            Point direction = new Point(maze.playerposition.X, maze.playerposition.Y);
             switch (e.KeyCode) {
                 case Keys.Up:
-                    movePlayer(new Point(maze.playerposition.X, maze.playerposition.Y - 1));
+                    direction.Y--;
                     break;
                 case Keys.Down:
-                    movePlayer(new Point(maze.playerposition.X, maze.playerposition.Y + 1));
+                    direction.Y++;
                     break;
                 case Keys.Left:
-                    movePlayer(new Point(maze.playerposition.X - 1, maze.playerposition.Y));
+                    direction.X--;
                     break;
                 case Keys.Right:
-                    movePlayer(new Point(maze.playerposition.X + 1, maze.playerposition.Y));
+                    direction.X++;
                     break;
                 case Keys.Space:
                     runner.search();
                     break;
             }
-
+            if (direction != maze.playerposition)
+            {
+                movePlayer(direction);
+            }
         }
 
         public void walkPath(Stack waypoints) {
