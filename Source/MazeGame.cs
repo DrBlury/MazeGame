@@ -30,7 +30,6 @@ namespace MazeAI
         
         // Logic
         Timer aTimer;
-        Timer refreshTimer;
         public bool canWalk = true;
 
         public Maze maze;
@@ -54,7 +53,6 @@ namespace MazeAI
             wallbrush = new TextureBrush(new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.png"));
             wallbrush.ScaleTransform(tileWidth / wallScaleFactor, tileHeight / wallScaleFactor);
             SetTimer();
-            SetRefreshTimer();
             runner = new MazeRunner(this);
         }
 
@@ -67,25 +65,10 @@ namespace MazeAI
             aTimer.Enabled = true;
         }
 
-        private void SetRefreshTimer()
-        {
-            refreshTimer = new Timer();
-            refreshTimer.Interval = 5000;
-            // Hook up the Elapsed event for the timer. 
-            refreshTimer.Elapsed += OnRefreshEvent;
-            refreshTimer.AutoReset = true;
-            refreshTimer.Enabled = true;
-        }
-
         private void OnTimedEvent(Object source, ElapsedEventArgs e) {
             this.canWalk = true;
             aTimer.Enabled = false;
             aTimer.Stop();
-        }
-
-        private void OnRefreshEvent(Object source, ElapsedEventArgs e)
-        {
-            InvalidateMaze();
         }
 
         private void MazeGame_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -246,10 +229,10 @@ namespace MazeAI
 
             Invalidate(new Region(
                 new RectangleF(
-                    maze.playerposition.X * tileWidth-1,
-                    maze.playerposition.Y * tileHeight-1,
-                    tileWidth+2,
-                    tileHeight+2
+                    maze.playerposition.X * tileWidth,
+                    maze.playerposition.Y * tileHeight,
+                    tileWidth,
+                    tileHeight
                 )
             ));
         }
