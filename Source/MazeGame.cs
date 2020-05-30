@@ -17,7 +17,7 @@ namespace MazeAI
         float grassScaleFactor = 100f;
 
         // Used for UI
-        bool updateMaze = true;
+        bool updateMaze;
         TextureBrush grassbrush;
         TextureBrush wallbrush;
         RectangleF bounds;
@@ -41,19 +41,20 @@ namespace MazeAI
             this.mainForm = mainForm;
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+            updateMaze = true;
+            Console.WriteLine("Set update Maze bool to true!");
             Width = 600;
             Height = 600;
             Text = "MazeRunner! - have fun. PRESS SPACE TO AUTO WALK!";
-
+            Console.WriteLine("Loading brushes!");
             grassbrush = new TextureBrush(new Bitmap(pathOfExecutable + "Resources/Images/grassTexture.png"));
             grassbrush.ScaleTransform(tileWidth / grassScaleFactor, tileHeight / grassScaleFactor);
 
             wallbrush = new TextureBrush(new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.png"));
             wallbrush.ScaleTransform(tileWidth / wallScaleFactor, tileHeight / wallScaleFactor);
             SetTimer();
+            Console.WriteLine("Creating runner!");
             runner = new MazeRunner(this);
-            Refresh();
-            Update();
         }
 
         private void SetTimer() {
@@ -109,7 +110,10 @@ namespace MazeAI
 
         override
         protected void OnPaint(PaintEventArgs e) {
+            Console.WriteLine("Doing OnPaint!");
+            Console.WriteLine("Update Maze bool is: " + updateMaze.ToString());
             if (updateMaze) {
+                Console.WriteLine("Updating Maze!");
                 updateMaze = false;
                 SetNewTileSizes(e);
                 InvalidateMaze();
