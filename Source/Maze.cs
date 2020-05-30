@@ -13,14 +13,12 @@ namespace MazeAI
         public int[,] map;
         public int width;
         public int height;
-        public int itemsLeft;
         public List<Point> invalidatedTiles = new List<Point>();
         public Point playerposition = new Point();
 
         public void readMap(String filePath)
         {
             String[] mapfile = File.ReadAllLines(filePath);
-            itemsLeft = 0;
 
             if (!int.TryParse(mapfile[0], out width) ||
                 !int.TryParse(mapfile[1], out height)) {
@@ -44,7 +42,6 @@ namespace MazeAI
                             break;
                         case '.':
                             map[column, row - 2] = 0;
-                            itemsLeft++;
                             break;
                         case '@':
                             playerposition = new Point(column, row-2);

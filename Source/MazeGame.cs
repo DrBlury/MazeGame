@@ -11,55 +11,51 @@ namespace MazeAI
 {
     class MazeGame : Form
     {
-        public Maze maze;
-        public bool canWalk = true;
-        public Timer aTimer;
 
+        // Customize
+        float playerSizeMultiplicator = 0.6f;
+        float wallScaleFactor = 500f;
+        float grassScaleFactor = 100f;
+
+        // Used for UI
+        bool updateMaze = true;
+        TextureBrush grassbrush;
+        TextureBrush wallbrush;
+        RectangleF bounds;
+        Form mainForm;
+
+        // Class variables
+        SizeF playerSize;
         float tileWidth;
         float tileHeight;
-        RectangleF bounds;
-        float playerSizeMultiplicator = 0.6f;
-        SizeF playerSize;
+        
+        // Logic
+        Timer aTimer;
+        public bool canWalk = true;
 
-        bool updateMaze = true;
-
-        Bitmap grass;
-        TextureBrush grassbrush;
-
-        Bitmap wall;
-        TextureBrush wallbrush;
-
+        public Maze maze;
         MazeRunner runner;
+        
         String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory + "/";
-
-        Form mainForm;
 
         public MazeGame(Form mainForm, Maze maze) {
             this.mainForm = mainForm;
             this.maze = maze;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-
-            //THIS IS NOT COMPATIBLE WITH MONO. It will throw an exception.Only for windows use. (Makes this whole application look a lot nicer)
-            this.wall = new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.png");
-            this.grass = new Bitmap(pathOfExecutable + "Resources/Images/grassTexture.png");
-
-            //TextureBrush brush = new TextureBrush();
-
-            grassbrush = new TextureBrush(this.grass);
-            grassbrush.ScaleTransform(0.1f, 0.1f);
-
-            wallbrush = new TextureBrush(this.wall);
-            wallbrush.ScaleTransform(0.1f, 0.1f);
-
             Width = 600;
             Height = 600;
             Text = "MazeRunner! - have fun. PRESS SPACE TO AUTO WALK!";
+
+            grassbrush = new TextureBrush(new Bitmap(pathOfExecutable + "Resources/Images/grassTexture.png"));
+            grassbrush.ScaleTransform(tileWidth / grassScaleFactor, tileHeight / grassScaleFactor);
+
+            wallbrush = new TextureBrush(new Bitmap(pathOfExecutable + "Resources/Images/stoneTexture.png"));
+            wallbrush.ScaleTransform(tileWidth / wallScaleFactor, tileHeight / wallScaleFactor);
             SetTimer();
-
             runner = new MazeRunner(this);
-
             Refresh();
             Update();
+            Application.DoEvents();
         }
 
         private void SetTimer() {
@@ -87,39 +83,47 @@ namespace MazeAI
             Refresh();
         }
 
+        private void SetNewTileSizes(PaintEventArgs e)
+        {
+            bounds = e.Graphics.VisibleClipBounds;
+            tileWidth = bounds.Width / maze.width;
+            tileHeight = bounds.Height / maze.height;
+            playerSize = new SizeF(tileWidth * playerSizeMultiplicator,
+                                   tileHeight * playerSizeMultiplicator);
+            wallbrush.ResetTransform();
+            wallbrush.ScaleTransform(tileWidth / wallScaleFactor, tileHeight / wallScaleFactor);
+
+            grassbrush.ResetTransform();
+            grassbrush.ScaleTransform(tileWidth / grassScaleFactor, tileHeight / grassScaleFactor);
+        }
+
+        private void RedrawMaze(PaintEventArgs e)
+        {
+            SetNewTileSizes(e);
+            Point tilePoint = new Point();
+            for (int j = 0; j < maze.height; j++)
+            {
+                tilePoint.Y = j;
+                for (int i = 0; i < maze.width; i++)
+                {
+                    tilePoint.X = i;
+                    drawTile(e, tilePoint);
+                }
+            }
+            Refresh();
+        }
+
         override
         protected void OnPaint(PaintEventArgs e) {
             if (updateMaze) {
-                bounds = e.Graphics.VisibleClipBounds;
-                tileWidth = bounds.Width / maze.width;
-                tileHeight = bounds.Height / maze.height;
-                playerSize = new SizeF(
-                                        tileWidth * playerSizeMultiplicator,
-                                        tileHeight * playerSizeMultiplicator
-                                      );
-
-                Point tilePoint = new Point();
-
-                for (int j = 0; j < maze.height; j++) {
-                    tilePoint.Y = j;
-                    for (int i = 0; i < maze.width; i++) {
-                        tilePoint.X = i;
-                        drawTile(e, tilePoint);
-                    }
-                }
                 updateMaze = false;
-                Refresh();
+                RedrawMaze(e);
             }
             else {
-                drawInvalidatedTiles(e, maze.invalidatedTiles);
-            }
-
-        }
-
-        private void drawInvalidatedTiles(PaintEventArgs e, List<Point> invalidatedTiles) {
-            while (invalidatedTiles.Count > 0) {
-                drawTile(e, invalidatedTiles[0]);
-                invalidatedTiles.RemoveAt(0);
+                while (maze.invalidatedTiles.Count > 0) {
+                    drawTile(e, maze.invalidatedTiles[0]);
+                    maze.invalidatedTiles.RemoveAt(0);
+                }
             }
         }
 
@@ -128,20 +132,20 @@ namespace MazeAI
                 new PointF(point.X * tileWidth, point.Y * tileHeight),
                 new SizeF(tileWidth, tileHeight));
 
-
             switch (maze.map[point.X, point.Y]) {
+                case 0:
+                    e.Graphics.FillRectangle(grassbrush, rect);
+                    drawItemTile(e, point, rect);
+                    break;
+                case 1:
+                    e.Graphics.FillRectangle(wallbrush, rect);
+                    break;
                 case 2:
                     e.Graphics.FillRectangle(grassbrush, rect);
                     drawPlayerTile(e, point, rect);
                     break;
                 case 3:
                     e.Graphics.FillRectangle(grassbrush, rect);
-                    break;
-                case 0:
-                    drawItemTile(e, point, rect);
-                    break;
-                case 1:
-                    e.Graphics.FillRectangle(wallbrush, rect);
                     break;
             }
         }
@@ -157,7 +161,7 @@ namespace MazeAI
         }
 
         private void drawItemTile(PaintEventArgs e, Point point, RectangleF rect) {
-            e.Graphics.FillRectangle(grassbrush, rect);
+            // Now draw item on top
             RectangleF itemRect = new RectangleF(
                 new PointF((point.X * tileWidth) + tileWidth * 0.3f, (point.Y * tileHeight) + tileHeight * 0.3f),
                 new SizeF(tileWidth * 0.4f, tileHeight * 0.4f));
@@ -192,10 +196,9 @@ namespace MazeAI
                     movePlayer((Point)waypoints.Pop());
                 }
             }
-            maze.itemsLeft--;
         }
 
-        public void movePlayer(Point futurePosition) {
+        private void movePlayer(Point futurePosition) {
             // Check if the player is trying to go inside a wall
             if (maze.map[futurePosition.X, futurePosition.Y] != 1 && this.canWalk) {
                 this.canWalk = false;
