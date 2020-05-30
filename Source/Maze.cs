@@ -4,27 +4,38 @@ using System.IO;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using MazeLauncher;
 
 namespace MazeAI
 {
     class Maze
     {
+
         public int[,] map;
         public int width;
         public int height;
         public List<Point> invalidatedTiles = new List<Point>();
         public Point playerposition = new Point();
 
-        public void readMap(String filePath)
+        public Maze()
         {
-            String[] mapfile = File.ReadAllLines(filePath);
+
+        }
+
+        public void readMap()
+        {
+            List<String> mapfile = new List<string>();
+            String line;
+            while ((line = Console.ReadLine()) != null)
+            {
+                mapfile.Add(line);
+            }
 
             if (!int.TryParse(mapfile[0], out width) ||
-                !int.TryParse(mapfile[1], out height)) {
+                !int.TryParse(mapfile[1], out height))
+            {
                 invalidMazeError(1);
             };
-            
+
             map = new int[width, height];
             // For each line (i is the row | Y AXIS)
             for (int row = 2; row < height + 2; row++)
