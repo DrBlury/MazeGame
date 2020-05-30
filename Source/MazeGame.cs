@@ -32,11 +32,9 @@ namespace MazeAI
         MazeRunner runner;
         String pathOfExecutable = AppDomain.CurrentDomain.BaseDirectory + "/";
 
-        Form mainForm;
-
-        public MazeGame(Form mainForm, Maze maze) {
-            this.mainForm = mainForm;
-            this.maze = maze;
+        public MazeGame(String filename) {
+            this.maze = new Maze();
+            maze.readMap(pathOfExecutable + filename)
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
             //THIS IS NOT COMPATIBLE WITH MONO. It will throw an exception.Only for windows use. (Makes this whole application look a lot nicer)
@@ -60,6 +58,11 @@ namespace MazeAI
 
             Refresh();
             Update();
+        }
+
+        [STAThread]
+        static void Main(String[] args) {
+            Application.Run(new MazeGame(args[0]));
         }
 
         private void SetTimer() {
