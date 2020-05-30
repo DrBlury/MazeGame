@@ -67,10 +67,25 @@ namespace MazeAI
             aTimer.Enabled = true;
         }
 
+        private void SetRefreshTimer()
+        {
+            aTimer = new Timer();
+            aTimer.Interval = 500;
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnRefreshEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+
         private void OnTimedEvent(Object source, ElapsedEventArgs e) {
             this.canWalk = true;
             aTimer.Enabled = false;
             aTimer.Stop();
+        }
+
+        private void OnRefreshEvent(Object source, ElapsedEventArgs e)
+        {
+            InvalidateMaze();
         }
 
         private void MazeGame_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
